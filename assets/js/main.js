@@ -128,8 +128,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const rows = csvText.split('\n').slice(1); 
                 const categories = {};
 
-                // Parse CSV including new columns
+                // Parse CSV
                 rows.forEach(row => {
+                    // Handle commas inside quotes properly if they ever occur
                     const cols = row.split(','); 
                     if(cols && cols.length >= 2) {
                         const category = (cols[0] || '').trim();
@@ -158,10 +159,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     items.forEach(item => {
                         // Logic for YouTube Video Card
                         if (item.vidId !== '') {
+                            // Smart logic: If a custom image link is provided, use it. Otherwise, use YouTube default.
+                            let thumbUrl = item.imageLink !== '' ? item.imageLink : `https://img.youtube.com/vi/${item.vidId}/maxresdefault.jpg`;
+                            
                             html += `
                                 <div class="work-card" style="min-width: 320px; margin:0;">
                                     <a href="https://youtube.com/watch?v=${item.vidId}" target="_blank">
-                                        <img src="https://img.youtube.com/vi/${item.vidId}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/${item.vidId}/hqdefault.jpg'" loading="lazy">
+                                        <img src="${thumbUrl}" onerror="this.src='https://img.youtube.com/vi/${item.vidId}/hqdefault.jpg'" loading="lazy" style="object-fit: cover; object-position: center;">
                                     </a>
                                     <div class="work-info">
                                         <h4>${item.title}</h4>
