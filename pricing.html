@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | Rezowan</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="glow-bg glow-1"></div>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo text-gradient">Rezowan</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="pricing.html" class="active">Pricing</a>
+                <a href="contact.html">Contact</a>
+                <a href="https://rezowankarim.github.io/Projects/" target="_blank">Utility</a>
+            </div>
+            <button class="hamburger"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <header class="container page-header reveal">
+        <h1>Transparent Pricing</h1>
+        <p>Select your location and content type to see the rate.</p>
+    </header>
+
+    <section class="container reveal" style="padding-top: 0;">
+        
+        <div class="pricing-calculator">
+            <div class="location-toggle">
+                <button class="loc-btn active" id="btn-bd">🇧🇩 Bangladesh</button>
+                <button class="loc-btn" id="btn-intl">🌍 International</button>
+            </div>
+
+            <div class="calc-group">
+                <label for="calc-service">Content Type</label>
+                <select id="calc-service" class="calc-select">
+                    <option value="AI Advertisement">AI Advertisement</option>
+                    <option value="AI Video Production">AI Video Production</option>
+                    <option value="AI Documentary">AI Documentary</option>
+                    <option value="AI Historical Documentary">AI Historical Documentary</option>
+                    <option value="AI Song & Music">AI Song & Music</option>
+                    <option value="AI Music Video">AI Music Video</option>
+                    <option value="AI Cartoon">AI Cartoon</option>
+                    <option value="AI Shorts & Social Content">AI Shorts & Social Content</option>
+                    <option value="AI Scriptwriting">AI Scriptwriting</option>
+                    <option value="AI Voice Over">AI Voice Over</option>
+                    <option value="AI Thumbnail & Poster">AI Thumbnail & Poster</option>
+                </select>
+            </div>
+
+            <div class="calc-group" id="slider-wrap">
+                <label for="calc-duration">Duration</label>
+                <div class="slider-container">
+                    <input type="range" id="calc-duration" class="calc-slider" min="30" max="1800" step="30" value="60">
+                    <div class="duration-val" id="duration-val">1 min</div>
+                </div>
+            </div>
+
+            <div class="calc-result">
+                <h3>Estimated Price</h3>
+                <div class="price-display" id="price-display">৳0</div>
+                <p class="pricing-note">Final price may vary based on complexity. Contact for a custom quote.</p>
+                <a href="contact.html" class="btn btn-primary">Get a Custom Quote →</a>
+            </div>
+        </div>
+
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo text-gradient" style="font-family: var(--font-d); font-weight:800;">Rezowan</div>
+            <p class="footer-sub">AI Content Creator & Digital Storyteller · Dhaka, Bangladesh</p>
+            <div class="footer-social">
+                <a href="https://www.youtube.com/rezowan" target="_blank"><i class="fab fa-youtube" style="color:#ff0000;"></i></a>
+<a href="https://www.linkedin.com/in/rezowan/" target="_blank"><i class="fab fa-linkedin" style="color: #0077b5;"></i></a>
+                <a href="http://tiktok.com/@rezowank33" target="_blank"><i class="fab fa-tiktok" style="color:#fff;"></i></a>
+            </div>
+            <div class="footer-nav">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="contact.html">Contact</a>
+                <a href="https://rezowankarim.github.io/Projects/" target="_blank">Utility</a>
+            </div>
+            <p class="copyright">© 2026 Rezowan. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

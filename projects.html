@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Rezowan</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="glow-bg glow-2"></div>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo text-gradient">Rezowan</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html" class="active">Projects</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="contact.html">Contact</a>
+                <a href="https://rezowankarim.github.io/Projects/" target="_blank">Utility</a>
+            </div>
+            <button class="hamburger"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <header class="container page-header reveal">
+        <h1>My Projects</h1>
+        <p>Browse by channel or category</p>
+    </header>
+
+    <section class="container reveal" style="padding-top: 0;">
+        
+        <div class="gs-alert">
+            <i class="fas fa-info-circle"></i> 
+            <strong>Google Sheets Auto-Update:</strong> 
+            Open <code>assets/js/main.js</code> and paste your Google Sheet CSV link at the bottom to automatically load your latest projects here without touching HTML!
+        </div>
+
+        <div id="dynamic-projects-container"></div>
+
+        <div id="static-projects-container">
+            <div class="project-row">
+                <div class="row-header"><h3>চলতি আলো</h3></div>
+                <div class="project-cards-strip">
+                    <div class="work-card" style="min-width: 320px; margin:0;"><a href="https://youtube.com/watch?v=iMAdVy0T0pE" target="_blank"><img src="https://img.youtube.com/vi/iMAdVy0T0pE/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/iMAdVy0T0pE/hqdefault.jpg'" loading="lazy"></a><div class="work-info"><h4>AI Music Video</h4><a href="https://youtube.com/watch?v=iMAdVy0T0pE" target="_blank">Watch →</a></div></div>
+                    <div class="work-card" style="min-width: 320px; margin:0;"><a href="https://youtube.com/watch?v=p8Dgk9j2Q30" target="_blank"><img src="https://img.youtube.com/vi/p8Dgk9j2Q30/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/p8Dgk9j2Q30/hqdefault.jpg'" loading="lazy"></a><div class="work-info"><h4>AI Song</h4><a href="https://youtube.com/watch?v=p8Dgk9j2Q30" target="_blank">Watch →</a></div></div>
+                    <div class="work-card" style="min-width: 320px; margin:0;"><a href="https://youtube.com/watch?v=rDaZe_nTEZQ" target="_blank"><img src="https://img.youtube.com/vi/rDaZe_nTEZQ/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/rDaZe_nTEZQ/hqdefault.jpg'" loading="lazy"></a><div class="work-info"><h4>AI Music</h4><a href="https://youtube.com/watch?v=rDaZe_nTEZQ" target="_blank">Watch →</a></div></div>
+                </div>
+            </div>
+
+            <div class="project-row">
+                <div class="row-header"><h3>চলতি রহস্য</h3></div>
+                <div class="project-cards-strip">
+                    <div class="work-card" style="min-width: 320px; margin:0;"><a href="https://youtube.com/watch?v=nsU50UJTO54" target="_blank"><img src="https://img.youtube.com/vi/nsU50UJTO54/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/nsU50UJTO54/hqdefault.jpg'" loading="lazy"></a><div class="work-info"><h4>Earth Documentary</h4><a href="https://youtube.com/watch?v=nsU50UJTO54" target="_blank">Watch →</a></div></div>
+                    <div class="work-card" style="min-width: 320px; margin:0;"><a href="https://youtube.com/watch?v=SfttsH5v_NA" target="_blank"><img src="https://img.youtube.com/vi/SfttsH5v_NA/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/SfttsH5v_NA/hqdefault.jpg'" loading="lazy"></a><div class="work-info"><h4>AI 2D Documentary</h4><a href="https://youtube.com/watch?v=SfttsH5v_NA" target="_blank">Watch →</a></div></div>
+                    <div class="work-card" style="min-width: 320px; margin:0;"><a href="https://youtube.com/watch?v=un9HeTqUCSE" target="_blank"><img src="https://img.youtube.com/vi/un9HeTqUCSE/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/un9HeTqUCSE/hqdefault.jpg'" loading="lazy"></a><div class="work-info"><h4>AI 3D Documentary</h4><a href="https://youtube.com/watch?v=un9HeTqUCSE" target="_blank">Watch →</a></div></div>
+                </div>
+            </div>
+
+            <div class="project-row">
+                <div class="row-header"><h3>বিজ্ঞাপন</h3></div>
+                <div class="project-cards-strip">
+                    <div class="work-card" style="min-width: 320px; margin:0;"><a href="https://youtube.com/watch?v=okxqORgAxxk" target="_blank"><img src="https://img.youtube.com/vi/okxqORgAxxk/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/okxqORgAxxk/hqdefault.jpg'" loading="lazy"></a><div class="work-info"><h4>AI Herbal Cosmetics</h4><a href="https://youtube.com/watch?v=okxqORgAxxk" target="_blank">Watch →</a></div></div>
+                    <div class="work-card" style="min-width: 320px; margin:0;"><a href="https://youtube.com/watch?v=DXpPEXB6gAQ" target="_blank"><img src="https://img.youtube.com/vi/DXpPEXB6gAQ/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/DXpPEXB6gAQ/hqdefault.jpg'" loading="lazy"></a><div class="work-info"><h4>AI Noodles Ad</h4><a href="https://youtube.com/watch?v=DXpPEXB6gAQ" target="_blank">Watch →</a></div></div>
+                    <div class="work-card" style="min-width: 320px; margin:0;"><a href="https://youtube.com/watch?v=UaBcdTTS750" target="_blank"><img src="https://img.youtube.com/vi/UaBcdTTS750/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/UaBcdTTS750/hqdefault.jpg'" loading="lazy"></a><div class="work-info"><h4>AI Restaurant Video</h4><a href="https://youtube.com/watch?v=UaBcdTTS750" target="_blank">Watch →</a></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo text-gradient" style="font-family: var(--font-d); font-weight:800;">Rezowan</div>
+            <p class="footer-sub">AI Content Creator & Digital Storyteller · Dhaka, Bangladesh</p>
+            <div class="footer-social">
+                <a href="https://www.youtube.com/rezowan" target="_blank"><i class="fab fa-youtube" style="color:#ff0000;"></i></a>
+<a href="https://www.linkedin.com/in/rezowan/" target="_blank"><i class="fab fa-linkedin" style="color: #0077b5;"></i></a>
+                <a href="http://tiktok.com/@rezowank33" target="_blank"><i class="fab fa-tiktok" style="color:#fff;"></i></a>
+            </div>
+            <div class="footer-nav">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="contact.html">Contact</a>
+                <a href="https://rezowankarim.github.io/Projects/" target="_blank">Utility</a>
+            </div>
+            <p class="copyright">© 2026 Rezowan. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

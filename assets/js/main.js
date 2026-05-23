@@ -1,0 +1,177 @@
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- Mobile Menu Toggle ---
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+            const icon = hamburger.querySelector('i');
+            if(navLinks.classList.contains('show')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
+
+    // --- Scroll Reveal Animation ---
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // --- Hidden Email Reveal (Contact Page) ---
+    const btnReveal = document.getElementById('btn-reveal-email');
+    const emailDisplay = document.getElementById('email-display');
+    if (btnReveal && emailDisplay) {
+        btnReveal.addEventListener('click', () => {
+            if (emailDisplay.style.display === 'block') {
+                emailDisplay.style.display = 'none';
+                btnReveal.innerText = 'Reveal Email';
+            } else {
+                const em = 'rezowancanon' + '@' + 'gmail.com';
+                emailDisplay.innerHTML = `<a href="mailto:${em}">${em}</a>`;
+                emailDisplay.style.display = 'block';
+                btnReveal.innerText = 'Hide Email';
+            }
+        });
+    }
+
+    // --- Pricing Calculator Logic ---
+    const calcSection = document.querySelector('.pricing-calculator');
+    if (calcSection) {
+        const rates = {
+            'AI Advertisement':           { bd: 1500, intl: 40, type: 'time', base: 30 }, 
+            'AI Video Production':        { bd: 800,  intl: 20, type: 'time', base: 60 },
+            'AI Documentary':             { bd: 1000, intl: 25, type: 'time', base: 60 },
+            'AI Historical Documentary':  { bd: 1200, intl: 30, type: 'time', base: 60 },
+            'AI Song & Music':            { bd: 2000, intl: 50, type: 'piece' },
+            'AI Music Video':             { bd: 1500, intl: 40, type: 'time', base: 60 },
+            'AI Cartoon':                 { bd: 1000, intl: 25, type: 'time', base: 60 },
+            'AI Shorts & Social Content': { bd: 800,  intl: 20, type: 'time', base: 60 },
+            'AI Scriptwriting':           { bd: 500,  intl: 15, type: 'piece' },
+            'AI Voice Over':              { bd: 600,  intl: 15, type: 'time', base: 60 },
+            'AI Thumbnail & Poster':      { bd: 300,  intl: 8,  type: 'piece' },
+        };
+
+        let isBD = true;
+        const btnBD = document.getElementById('btn-bd');
+        const btnIntl = document.getElementById('btn-intl');
+        const selectService = document.getElementById('calc-service');
+        const slider = document.getElementById('calc-duration');
+        const sliderContainer = document.getElementById('slider-wrap');
+        const durationText = document.getElementById('duration-val');
+        const priceDisplay = document.getElementById('price-display');
+
+        const updateCalc = () => {
+            const serviceName = selectService.value;
+            const serviceData = rates[serviceName];
+            if (!serviceData) return;
+
+            let price = 0;
+            const sym = isBD ? '৳' : '$';
+            const rate = isBD ? serviceData.bd : serviceData.intl;
+
+            if (serviceData.type === 'piece') {
+                sliderContainer.style.display = 'none';
+                price = rate;
+            } else {
+                sliderContainer.style.display = 'flex';
+                const seconds = parseInt(slider.value);
+                if (seconds < 60) {
+                    durationText.innerText = `${seconds} sec`;
+                } else {
+                    const mins = Math.floor(seconds / 60);
+                    const secs = seconds % 60;
+                    durationText.innerText = secs > 0 ? `${mins}m ${secs}s` : `${mins} min`;
+                }
+                const units = seconds / serviceData.base;
+                price = Math.ceil(units * rate);
+            }
+
+            const minPrice = isBD ? 300 : 8;
+            if (price < minPrice) price = minPrice;
+            priceDisplay.innerText = `${sym}${price.toLocaleString()}`;
+        };
+
+        btnBD.addEventListener('click', () => { isBD = true; btnBD.classList.add('active'); btnIntl.classList.remove('active'); updateCalc(); });
+        btnIntl.addEventListener('click', () => { isBD = false; btnIntl.classList.add('active'); btnBD.classList.remove('active'); updateCalc(); });
+        selectService.addEventListener('change', updateCalc);
+        slider.addEventListener('input', updateCalc);
+        updateCalc();
+    }
+
+    // --- Google Sheets Dynamic Projects Loader (Rezowan's Live Link) ---
+    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ3t440ry-z5iC2uqHdj27eVBs0ru7NtnRdMgGSHjry7lJNkrenU_7EHlQxRESpBj113GW0LvcqJQoy/pub?output=csv';
+    
+    const dynamicContainer = document.getElementById('dynamic-projects-container');
+    const staticContainer = document.getElementById('static-projects-container');
+
+    if (dynamicContainer && SHEET_CSV_URL !== '') {
+        // Hide static, show dynamic
+        if(staticContainer) staticContainer.style.display = 'none';
+        
+        fetch(SHEET_CSV_URL)
+            .then(response => response.text())
+            .then(csvText => {
+                const rows = csvText.split('\n').slice(1); // skip header row
+                const categories = {};
+
+                // Parse CSV and group by category
+                rows.forEach(row => {
+                    const cols = row.split(','); 
+                    if(cols.length >= 3) {
+                        const category = cols[0].trim();
+                        const title = cols[1].trim();
+                        const vidId = cols[2].trim();
+                        
+                        if(category && vidId) {
+                            if(!categories[category]) categories[category] = [];
+                            categories[category].push({ title, vidId });
+                        }
+                    }
+                });
+
+                // Build HTML
+                let html = '';
+                for (const [catName, videos] of Object.entries(categories)) {
+                    html += `
+                    <div class="project-row reveal">
+                        <div class="row-header">
+                            <h3>${catName}</h3>
+                        </div>
+                        <div class="project-cards-strip">
+                    `;
+                    videos.forEach(v => {
+                        html += `
+                            <div class="work-card" style="min-width: 320px; margin:0;">
+                                <a href="https://youtube.com/watch?v=${v.vidId}" target="_blank">
+                                    <img src="https://img.youtube.com/vi/${v.vidId}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/${v.vidId}/hqdefault.jpg'" loading="lazy">
+                                </a>
+                                <div class="work-info">
+                                    <h4>${v.title}</h4>
+                                    <a href="https://youtube.com/watch?v=${v.vidId}" target="_blank">Watch →</a>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    html += `</div></div>`;
+                }
+                dynamicContainer.innerHTML = html;
+            })
+            .catch(err => {
+                console.error('Error loading Google Sheet:', err);
+                dynamicContainer.innerHTML = '<p style="color:red;">Error loading videos. Make sure the Google Sheet is published to web as CSV.</p>';
+                if(staticContainer) staticContainer.style.display = 'block'; // fallback
+            });
+    }
+});
