@@ -110,15 +110,13 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCalc();
     }
 
-    // --- Google Sheets Dynamic Projects Loader (Rezowan's NEW Sheet) ---
-    // এখানে আপনার নতুন শিটের সঠিক CSV লিংকটি বসানো হয়েছে
+    // --- Google Sheets Dynamic Projects & News Loader ---
     const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1d0DvC09G--rW6ar793Hy2jeVD1KUHSwOeywV6Aa7SQk/export?format=csv';
     
     const dynamicContainer = document.getElementById('dynamic-projects-container');
     const staticContainer = document.getElementById('static-projects-container');
 
     if (dynamicContainer && SHEET_CSV_URL !== '') {
-        // Hide static, show dynamic
         if(staticContainer) staticContainer.style.display = 'none';
         
         fetch(SHEET_CSV_URL)
@@ -127,28 +125,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.text();
             })
             .then(csvText => {
-                const rows = csvText.split('\n').slice(1); // skip header row
+                const rows = csvText.split('\n').slice(1); 
                 const categories = {};
 
-                // Parse CSV safely
+                // Parse CSV including new columns
                 rows.forEach(row => {
                     const cols = row.split(','); 
-                    // এটি চেক করবে যে লাইনটি ফাঁকা কি না
-                    if(cols && cols.length >= 3) {
+                    if(cols && cols.length >= 2) {
                         const category = (cols[0] || '').trim();
                         const title = (cols[1] || '').trim();
                         const vidId = (cols[2] || '').trim();
+                        const articleLink = (cols[3] || '').trim();
+                        const imageLink = (cols[4] || '').trim();
                         
-                        if(category !== '' && vidId !== '') {
+                        if(category !== '' && title !== '') {
                             if(!categories[category]) categories[category] = [];
-                            categories[category].push({ title, vidId });
+                            categories[category].push({ title, vidId, articleLink, imageLink });
                         }
                     }
                 });
 
                 // Build HTML
                 let html = '';
-                for (const [catName, videos] of Object.entries(categories)) {
+                for (const [catName, items] of Object.entries(categories)) {
                     html += `
                     <div class="project-row reveal visible">
                         <div class="row-header">
@@ -156,18 +155,35 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <div class="project-cards-strip">
                     `;
-                    videos.forEach(v => {
-                        html += `
-                            <div class="work-card" style="min-width: 320px; margin:0;">
-                                <a href="https://youtube.com/watch?v=${v.vidId}" target="_blank">
-                                    <img src="https://img.youtube.com/vi/${v.vidId}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/${v.vidId}/hqdefault.jpg'" loading="lazy">
-                                </a>
-                                <div class="work-info">
-                                    <h4>${v.title}</h4>
-                                    <a href="https://youtube.com/watch?v=${v.vidId}" target="_blank" style="color: var(--a1); font-weight: 600;">Watch →</a>
+                    items.forEach(item => {
+                        // Logic for YouTube Video Card
+                        if (item.vidId !== '') {
+                            html += `
+                                <div class="work-card" style="min-width: 320px; margin:0;">
+                                    <a href="https://youtube.com/watch?v=${item.vidId}" target="_blank">
+                                        <img src="https://img.youtube.com/vi/${item.vidId}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/${item.vidId}/hqdefault.jpg'" loading="lazy">
+                                    </a>
+                                    <div class="work-info">
+                                        <h4>${item.title}</h4>
+                                        <a href="https://youtube.com/watch?v=${item.vidId}" target="_blank" style="color: var(--a1); font-weight: 600;">Watch Video →</a>
+                                    </div>
                                 </div>
-                            </div>
-                        `;
+                            `;
+                        } 
+                        // Logic for News/Book Card
+                        else if (item.articleLink !== '' && item.imageLink !== '') {
+                            html += `
+                                <div class="work-card" style="min-width: 320px; margin:0;">
+                                    <a href="${item.articleLink}" target="_blank">
+                                        <img src="${item.imageLink}" onerror="this.src='https://dummyimage.com/320x190/1a1a2e/ffffff&text=Image+Not+Found'" loading="lazy" style="object-fit: cover; object-position: top;">
+                                    </a>
+                                    <div class="work-info">
+                                        <h4>${item.title}</h4>
+                                        <a href="${item.articleLink}" target="_blank" style="color: var(--a2); font-weight: 600;">Read More →</a>
+                                    </div>
+                                </div>
+                            `;
+                        }
                     });
                     html += `</div></div>`;
                 }
@@ -176,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(err => {
                 console.error('Error loading Google Sheet:', err);
                 dynamicContainer.innerHTML = '<p style="color:red; text-align:center;">Failed to load projects. Please try again later.</p>';
-                if(staticContainer) staticContainer.style.display = 'block'; // fallback
+                if(staticContainer) staticContainer.style.display = 'block';
             });
     }
 });
