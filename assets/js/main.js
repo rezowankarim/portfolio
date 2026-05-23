@@ -110,8 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCalc();
     }
 
-    // --- Google Sheets Dynamic Projects Loader (Rezowan's Live Link) ---
-    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ3t440ry-z5iC2uqHdj27eVBs0ru7NtnRdMgGSHjry7lJNkrenU_7EHlQxRESpBj113GW0LvcqJQoy/pub?output=csv';
+    // --- Google Sheets Dynamic Projects Loader (Rezowan's NEW Sheet) ---
+    // এখানে আপনার নতুন শিটের সঠিক CSV লিংকটি বসানো হয়েছে
+    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1d0DvC09G--rW6ar793Hy2jeVD1KUHSwOeywV6Aa7SQk/export?format=csv';
     
     const dynamicContainer = document.getElementById('dynamic-projects-container');
     const staticContainer = document.getElementById('static-projects-container');
@@ -121,20 +122,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if(staticContainer) staticContainer.style.display = 'none';
         
         fetch(SHEET_CSV_URL)
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) throw new Error("Network response was not ok");
+                return response.text();
+            })
             .then(csvText => {
                 const rows = csvText.split('\n').slice(1); // skip header row
                 const categories = {};
 
-                // Parse CSV and group by category
+                // Parse CSV safely
                 rows.forEach(row => {
                     const cols = row.split(','); 
-                    if(cols.length >= 3) {
-                        const category = cols[0].trim();
-                        const title = cols[1].trim();
-                        const vidId = cols[2].trim();
+                    // এটি চেক করবে যে লাইনটি ফাঁকা কি না
+                    if(cols && cols.length >= 3) {
+                        const category = (cols[0] || '').trim();
+                        const title = (cols[1] || '').trim();
+                        const vidId = (cols[2] || '').trim();
                         
-                        if(category && vidId) {
+                        if(category !== '' && vidId !== '') {
                             if(!categories[category]) categories[category] = [];
                             categories[category].push({ title, vidId });
                         }
@@ -145,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let html = '';
                 for (const [catName, videos] of Object.entries(categories)) {
                     html += `
-                    <div class="project-row reveal">
+                    <div class="project-row reveal visible">
                         <div class="row-header">
                             <h3>${catName}</h3>
                         </div>
@@ -159,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 </a>
                                 <div class="work-info">
                                     <h4>${v.title}</h4>
-                                    <a href="https://youtube.com/watch?v=${v.vidId}" target="_blank">Watch →</a>
+                                    <a href="https://youtube.com/watch?v=${v.vidId}" target="_blank" style="color: var(--a1); font-weight: 600;">Watch →</a>
                                 </div>
                             </div>
                         `;
@@ -170,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(err => {
                 console.error('Error loading Google Sheet:', err);
-                dynamicContainer.innerHTML = '<p style="color:red;">Error loading videos. Make sure the Google Sheet is published to web as CSV.</p>';
+                dynamicContainer.innerHTML = '<p style="color:red; text-align:center;">Failed to load projects. Please try again later.</p>';
                 if(staticContainer) staticContainer.style.display = 'block'; // fallback
             });
     }
