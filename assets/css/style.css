@@ -51,9 +51,21 @@ a { color: var(--text); text-decoration: none; transition: 0.3s; }
 ul { list-style: none; }
 
 .text-gradient {
-    background: var(--grad);
+    background: linear-gradient(90deg, #ff007f, #7f00ff, #00d4ff, #ff007f);
+    background-size: 300%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: color-shift 6s ease-in-out infinite alternate;
+    font-weight: bold;
+}
+
+@keyframes color-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
 }
 
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
