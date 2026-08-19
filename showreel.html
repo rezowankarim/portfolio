@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Showreel | Rezowan</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Featured 16:9 Landscape Video Player */
+        .featured-landscape-wrapper {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0 50px 0;
+        }
+        .featured-landscape-card {
+            width: 100%;
+            max-width: 900px; /* ল্যান্ডস্কেপ প্লেয়ারের পারফেক্ট সাইজ */
+            aspect-ratio: 16 / 9;
+            background: #0b0d14;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+        }
+        .featured-landscape-card iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Horizontal Scrolling Strip */
+        .reel-cards-strip {
+            display: flex;
+            gap: 18px;
+            overflow-x: auto;
+            padding: 10px 0 25px 0;
+            scroll-behavior: smooth;
+        }
+        .reel-cards-strip::-webkit-scrollbar {
+            height: 6px;
+        }
+        .reel-cards-strip::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        /* 9:16 Vertical Reel Card Style */
+        .work-card-reel {
+            min-width: 190px;
+            max-width: 220px;
+            background: #131722;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            flex-shrink: 0;
+        }
+        .work-card-reel:hover {
+            transform: translateY(-6px);
+            border-color: rgba(168, 85, 247, 0.5);
+        }
+        .thumbnail-9-16 {
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            overflow: hidden;
+            display: block;
+            background: #000;
+            position: relative;
+        }
+        .thumbnail-9-16 img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 16:9 Landscape Card Style (Optional Categories) */
+        .work-card-landscape {
+            min-width: 300px;
+            max-width: 340px;
+            background: #131722;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+        .work-card-landscape:hover {
+            transform: translateY(-6px);
+        }
+        .thumbnail-16-9 {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            display: block;
+            background: #000;
+        }
+        .thumbnail-16-9 img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Info box */
+        .work-info-box {
+            padding: 12px;
+        }
+        .work-info-box h4 {
+            margin: 0 0 6px 0;
+            font-size: 0.9rem;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .work-info-box a {
+            color: #a855f7;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-bg glow-2"></div>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo text-gradient">Rezowan</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="showreel.html" class="active">Showreel</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="contact.html">Contact</a>
+                <a href="https://rezowankarim.github.io/Projects/" target="_blank">Utility</a>
+            </div>
+            <button class="hamburger"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <header class="container page-header reveal">
+        <h1>Video Edits & Showreel</h1>
+        <p>A showcase of my short-form reels, sound designs, and long-form video edits</p>
+    </header>
+
+    <section class="container reveal" style="padding-top: 0;">
+        <!-- Top Featured 16:9 Player -->
+        <div class="featured-landscape-wrapper">
+            <div class="featured-landscape-card" id="featured-video-container">
+                <!-- ১ম ভিডিওটি (16:9) এখানে লোড হবে -->
+            </div>
+        </div>
+
+        <!-- বাকি ক্যাটাগরিগুলো নিচে আসবে -->
+        <div id="dynamic-showreel-container"></div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo text-gradient" style="font-family: var(--font-d); font-weight:800;">Rezowan</div>
+            <p class="footer-sub">AI Content Creator & Digital Storyteller · Dhaka, Bangladesh</p>
+            <div class="footer-social">
+                <a href="https://www.youtube.com/rezowan" target="_blank"><i class="fab fa-youtube" style="color:#ff0000;"></i></a>
+                <a href="https://www.linkedin.com/in/rezowan/" target="_blank"><i class="fab fa-linkedin" style="color: #0077b5;"></i></a>
+                <a href="http://tiktok.com/@rezowank33" target="_blank"><i class="fab fa-tiktok" style="color:#fff;"></i></a>
+            </div>
+            <div class="footer-nav">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="showreel.html">Showreel</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="contact.html">Contact</a>
+                <a href="https://rezowankarim.github.io/Projects/" target="_blank">Utility</a>
+            </div>
+            <p class="copyright">© 2026 Rezowan. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/showreel.js"></script>
+</body>
+</html>
